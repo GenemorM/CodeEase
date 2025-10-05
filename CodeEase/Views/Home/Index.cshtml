@@ -1,0 +1,282 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="fade-in">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card bg-gradient-primary text-white border-radius-lg">
+                <div class="card-body p-5 text-center">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="fas fa-code me-3"></i>Welcome to CodeEase
+                    </h1>
+                    <p class="lead mb-4">
+                        Master Java programming with AI-powered lessons, interactive coding exercises, and real-time feedback.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <button class="btn btn-light btn-lg px-4" onclick="showRegisterModal()">
+                            <i class="fas fa-rocket me-2"></i>Get Started
+                        </button>
+                        <a href="#features" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fas fa-info-circle me-2"></i>Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="row mb-5" id="stats">
+        <div class="col-md-4 mb-3">
+            <div class="card text-center h-100 slide-in-right">
+                <div class="card-body">
+                    <i class="fas fa-book text-primary mb-3" style="font-size: 3rem;"></i>
+                    <h3 class="fw-bold text-primary">50+</h3>
+                    <p class="text-muted">Interactive Lessons</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center h-100 slide-in-right" style="animation-delay: 0.1s;">
+                <div class="card-body">
+                    <i class="fas fa-code text-success mb-3" style="font-size: 3rem;"></i>
+                    <h3 class="fw-bold text-success">100+</h3>
+                    <p class="text-muted">Code Exercises</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card text-center h-100 slide-in-right" style="animation-delay: 0.2s;">
+                <div class="card-body">
+                    <i class="fas fa-users text-info mb-3" style="font-size: 3rem;"></i>
+                    <h3 class="fw-bold text-info">1000+</h3>
+                    <p class="text-muted">Students Learning</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mb-5" id="features">
+        <div class="col-12 mb-4">
+            <h2 class="text-center fw-bold mb-4">Why Choose CodeEase?</h2>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm-custom">
+                <div class="card-body text-center p-4">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-robot text-primary" style="font-size: 2rem;"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">AI-Powered Learning</h4>
+                    <p class="text-muted">
+                        Get personalized lessons and instant feedback powered by Google Gemini AI. 
+                        Learn at your own pace with adaptive content.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm-custom">
+                <div class="card-body text-center p-4">
+                    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-terminal text-success" style="font-size: 2rem;"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Interactive Code Editor</h4>
+                    <p class="text-muted">
+                        Write, compile, and run Java code directly in your browser. 
+                        Get real-time syntax highlighting and error detection.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm-custom">
+                <div class="card-body text-center p-4">
+                    <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-chart-line text-info" style="font-size: 2rem;"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Progress Tracking</h4>
+                    <p class="text-muted">
+                        Monitor your learning journey with detailed progress reports, 
+                        quiz scores, and achievement badges.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Getting Started Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="fas fa-play-circle me-2"></i>Getting Started
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <span class="fw-bold text-primary" style="font-size: 1.5rem;">1</span>
+                            </div>
+                            <h5 class="fw-bold">Create Account</h5>
+                            <p class="text-muted">Sign up as a student or teacher to access all features.</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <span class="fw-bold text-success" style="font-size: 1.5rem;">2</span>
+                            </div>
+                            <h5 class="fw-bold">Choose Your Path</h5>
+                            <p class="text-muted">Browse lessons from beginner to advanced Java concepts.</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <span class="fw-bold text-info" style="font-size: 1.5rem;">3</span>
+                            </div>
+                            <h5 class="fw-bold">Start Coding</h5>
+                            <p class="text-muted">Practice with interactive exercises and real-time feedback.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Lessons Preview (for authenticated users) -->
+    <div class="row mb-5" id="recentLessons" style="display: none;">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="fas fa-clock me-2"></i>Continue Learning
+                    </h3>
+                    <a href="/Lessons" class="btn btn-outline-primary btn-sm">
+                        View All <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="recentLessonsContainer">
+                        <!-- Recent lessons will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center p-5">
+                    <h3 class="fw-bold mb-3">Ready to Start Your Java Journey?</h3>
+                    <p class="lead text-muted mb-4">
+                        Join thousands of students already learning Java with CodeEase.
+                    </p>
+                    <button class="btn btn-primary btn-lg px-5" onclick="showRegisterModal()">
+                        <i class="fas fa-user-plus me-2"></i>Sign Up Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Show recent lessons for authenticated users
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication status first
+            checkAuthStatus();
+            
+            // Only proceed if user is authenticated
+            if (authToken && currentUser) {
+                document.getElementById('recentLessons').style.display = 'block';
+                loadRecentLessons();
+            } else {
+                console.log('User not authenticated, skipping recent lessons');
+            }
+        });
+
+        async function loadRecentLessons() {
+            try {
+                const response = await makeAuthenticatedRequest('/api/lessons/recent');
+                if (response.ok) {
+                    const lessons = await response.json();
+                    displayRecentLessons(lessons);
+                } else {
+                    console.log('Failed to load recent lessons:', response.status);
+                }
+            } catch (error) {
+                console.error('Error loading recent lessons:', error);
+            }
+        }
+
+        function displayRecentLessons(lessons) {
+            const container = document.getElementById('recentLessonsContainer');
+            
+            if (!lessons || lessons.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center">
+                        <div class="empty-state">
+                            <i class="fas fa-book-open"></i>
+                            <h4>No Recent Lessons</h4>
+                            <p>Start your learning journey by exploring our lessons.</p>
+                            <a href="/Lessons" class="btn btn-primary">Browse Lessons</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = lessons.slice(0, 3).map(lesson => `
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="badge bg-${getDifficultyColor(lesson.difficulty)} mb-2">
+                                    ${lesson.difficulty}
+                                </span>
+                                <small class="text-muted">${formatDate(lesson.updatedAt)}</small>
+                            </div>
+                            <h5 class="card-title">${lesson.title}</h5>
+                            <p class="card-text text-muted">${lesson.description}</p>
+                            <div class="progress mb-2" style="height: 6px;">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: ${lesson.progress || 0}%"
+                                     aria-valuenow="${lesson.progress || 0}" 
+                                     aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                            <small class="text-muted">${lesson.progress || 0}% Complete</small>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a href="/Lessons/${lesson.id}" class="btn btn-outline-primary btn-sm">
+                                Continue <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getDifficultyColor(difficulty) {
+            switch (difficulty?.toLowerCase()) {
+                case 'beginner': return 'success';
+                case 'intermediate': return 'warning';
+                case 'advanced': return 'danger';
+                default: return 'secondary';
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString();
+        }
+    </script>
+}

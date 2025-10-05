@@ -1,0 +1,221 @@
+@{
+    ViewData["Title"] = "Code Runner";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-play-circle me-2"></i>Code Runner</h2>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success" onclick="runCode()">
+                        <i class="fas fa-play me-1"></i>Run Code
+                    </button>
+                    <button type="button" class="btn btn-info" onclick="validateCode()">
+                        <i class="fas fa-check-circle me-1"></i>Validate
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="clearAll()">
+                        <i class="fas fa-trash me-1"></i>Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Code Editor Section -->
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <label for="languageSelect" class="form-label mb-0">Language:</label>
+                                    <select class="form-select form-select-sm" id="languageSelect" onchange="onLanguageChange()">
+                                        <option value="java">Java</option>
+                                        <option value="csharp">C#</option>
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="python">Python</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="timeoutInput" class="form-label mb-0">Timeout (ms):</label>
+                                    <input type="number" class="form-control form-control-sm" id="timeoutInput" value="30000" min="1000" max="60000">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check mt-4">
+                                        <input class="form-check-input" type="checkbox" id="autoRunCheck">
+                                        <label class="form-check-label" for="autoRunCheck">
+                                            Auto-run on change
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="code-editor-container">
+                                <textarea id="codeEditor" class="form-control code-editor" rows="20" placeholder="Enter your code here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Section -->
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="fas fa-keyboard me-2"></i>Input (stdin)</h6>
+                        </div>
+                        <div class="card-body">
+                            <textarea id="inputEditor" class="form-control" rows="4" placeholder="Enter input for your program (optional)..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output Section -->
+                <div class="col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0"><i class="fas fa-terminal me-2"></i>Output</h6>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary" onclick="copyOutput()" title="Copy Output">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="clearOutput()" title="Clear Output">
+                                    <i class="fas fa-eraser"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Execution Status -->
+                            <div id="executionStatus" class="mb-3" style="display: none;">
+                                <div class="d-flex align-items-center">
+                                    <div class="spinner-border spinner-border-sm me-2" role="status" id="executionSpinner" style="display: none;">
+                                        <span class="visually-hidden">Running...</span>
+                                    </div>
+                                    <span id="statusText">Ready</span>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted">
+                                        <span id="executionTime"></span>
+                                        <span id="executionId" class="ms-2"></span>
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Output Tabs -->
+                            <ul class="nav nav-tabs nav-tabs-sm mb-3" id="outputTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="stdout-tab" data-bs-toggle="tab" data-bs-target="#stdout" type="button" role="tab">
+                                        <i class="fas fa-terminal me-1"></i>Output
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="stderr-tab" data-bs-toggle="tab" data-bs-target="#stderr" type="button" role="tab">
+                                        <i class="fas fa-exclamation-triangle me-1"></i>Errors
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="outputTabContent">
+                                <div class="tab-pane fade show active" id="stdout" role="tabpanel">
+                                    <pre id="outputContent" class="output-content"></pre>
+                                </div>
+                                <div class="tab-pane fade" id="stderr" role="tabpanel">
+                                    <pre id="errorContent" class="output-content error-content"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Templates -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0"><i class="fas fa-code me-2"></i>Code Templates</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="codeTemplates">
+                                <!-- Templates will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mb-0">Executing code...</p>
+                <small class="text-muted">This may take a few moments</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.code-editor {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    resize: vertical;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+}
+
+.code-editor:focus {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    box-shadow: none;
+    border: none;
+}
+
+.code-editor-container {
+    background-color: #1e1e1e;
+    border-radius: 0.375rem;
+}
+
+.output-content {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.error-content {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.nav-tabs-sm .nav-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.template-card {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.template-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+</style>
+
+<script src="~/js/coderunner.js"></script>

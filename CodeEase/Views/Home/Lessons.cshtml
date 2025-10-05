@@ -1,0 +1,204 @@
+@{
+    ViewData["Title"] = "Lessons";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-book-open me-2"></i>ASP.NET Core Lessons</h2>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary" onclick="showCreateLessonModal()">
+                        <i class="fas fa-plus me-1"></i>Create Lesson
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="showGenerateLessonModal()">
+                        <i class="fas fa-magic me-1"></i>AI Generate
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="difficultyFilter" class="form-label">Difficulty Level</label>
+                            <select class="form-select" id="difficultyFilter" onchange="filterLessons()">
+                                <option value="">All Levels</option>
+                                <option value="0">Beginner</option>
+                                <option value="1">Intermediate</option>
+                                <option value="2">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="searchInput" class="form-label">Search Lessons</label>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search by title or description..." onkeyup="filterLessons()">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Show</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="showAiGenerated" checked onchange="filterLessons()">
+                                <label class="form-check-label" for="showAiGenerated">
+                                    AI Generated Lessons
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lessons Grid -->
+            <div id="lessonsContainer" class="row">
+                <!-- Lessons will be loaded here -->
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading lessons...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-5" style="display: none;">
+                <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+                <h4>No Lessons Found</h4>
+                <p class="text-muted">Start by creating your first lesson or generate one using AI.</p>
+                <button class="btn btn-primary me-2" onclick="showCreateLessonModal()">
+                    <i class="fas fa-plus me-1"></i>Create Lesson
+                </button>
+                <button class="btn btn-success" onclick="showGenerateLessonModal()">
+                    <i class="fas fa-magic me-1"></i>AI Generate
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Lesson Modal -->
+<div class="modal fade" id="createLessonModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Lesson</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createLessonForm">
+                    <div class="mb-3">
+                        <label for="lessonTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="lessonTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lessonDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="lessonDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lessonDifficulty" class="form-label">Difficulty Level</label>
+                        <select class="form-select" id="lessonDifficulty" required>
+                            <option value="0">Beginner</option>
+                            <option value="1">Intermediate</option>
+                            <option value="2">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lessonContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="lessonContent" rows="10" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lessonCodeExamples" class="form-label">Code Examples</label>
+                        <textarea class="form-control" id="lessonCodeExamples" rows="8"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lessonOrderIndex" class="form-label">Order Index</label>
+                        <input type="number" class="form-control" id="lessonOrderIndex" min="1" required>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="lessonIsPublished">
+                        <label class="form-check-label" for="lessonIsPublished">
+                            Publish immediately
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="createLesson()">
+                    <i class="fas fa-save me-1"></i>Create Lesson
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generate Lesson Modal -->
+<div class="modal fade" id="generateLessonModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-magic me-2"></i>AI Generate Lesson
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="generateLessonForm">
+                    <div class="mb-3">
+                        <label for="generateTopic" class="form-label">Topic</label>
+                        <input type="text" class="form-control" id="generateTopic" 
+                               placeholder="e.g., MVC Controllers, Entity Framework, Authentication" required>
+                        <div class="form-text">Enter the ASP.NET Core topic you want to generate a lesson for.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="generateDifficulty" class="form-label">Difficulty Level</label>
+                        <select class="form-select" id="generateDifficulty" required>
+                            <option value="0">Beginner</option>
+                            <option value="1">Intermediate</option>
+                            <option value="2">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        The AI will generate comprehensive lesson content including explanations, code examples, and best practices. 
+                        The lesson will be created as a draft for your review before publishing.
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="generateLesson()">
+                    <i class="fas fa-magic me-1"></i>Generate Lesson
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lesson Detail Modal -->
+<div class="modal fade" id="lessonDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lessonDetailTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="lessonDetailContent">
+                    <!-- Lesson content will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="editLessonBtn" onclick="editLesson()">
+                    <i class="fas fa-edit me-1"></i>Edit
+                </button>
+                <button type="button" class="btn btn-success" id="generateQuizBtn" onclick="generateQuiz()">
+                    <i class="fas fa-question-circle me-1"></i>Generate Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/lessons.js"></script>

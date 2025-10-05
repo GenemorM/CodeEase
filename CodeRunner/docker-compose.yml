@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  coderunner:
+    build: .
+    container_name: codease-runner
+    ports:
+      - "3001:3001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./temp:/app/temp
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    cpus: 0.5
+    networks:
+      - codease-network
+
+networks:
+  codease-network:
+    driver: bridge
