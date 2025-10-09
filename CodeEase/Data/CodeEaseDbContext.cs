@@ -9,18 +9,18 @@ namespace CodeEase.Data
         {
         }
         
-        public DbSet<User> Users { get; set; }
-        public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<Quiz> Quizzes { get; set; }
-        public DbSet<QuizQuestion> QuizQuestions { get; set; }
-        public DbSet<QuizOption> QuizOptions { get; set; }
-        public DbSet<StudentProgress> StudentProgresses { get; set; }
-        public DbSet<QuizAttempt> QuizAttempts { get; set; }
-        public DbSet<QuizAnswer> QuizAnswers { get; set; }
-        public DbSet<Class> Classes { get; set; }
-        public DbSet<ClassEnrollment> ClassEnrollments { get; set; }
-        public DbSet<ClassLesson> ClassLessons { get; set; }
-        public DbSet<QuizAssignment> QuizAssignments { get; set; }
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Lesson> Lessons { get; set; } = null!;
+        public DbSet<Quiz> Quizzes { get; set; } = null!;
+        public DbSet<QuizQuestion> QuizQuestions { get; set; } = null!;
+        public DbSet<QuizOption> QuizOptions { get; set; } = null!;
+        public DbSet<StudentProgress> StudentProgresses { get; set; } = null!;
+        public DbSet<QuizAttempt> QuizAttempts { get; set; } = null!;
+        public DbSet<QuizAnswer> QuizAnswers { get; set; } = null!;
+        public DbSet<Class> Classes { get; set; } = null!;
+        public DbSet<ClassEnrollment> ClassEnrollments { get; set; } = null!;
+        public DbSet<ClassLesson> ClassLessons { get; set; } = null!;
+        public DbSet<QuizAssignment> QuizAssignments { get; set; } = null!;
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

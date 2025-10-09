@@ -42,7 +42,7 @@ Focus on practical, hands-on learning with working code examples.
 ";
 
                 var response = await _model.GenerateContent(prompt);
-                return response.Text;
+                return response.Text ?? string.Empty;
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ Make sure questions test understanding, not just memorization.
 ";
 
                 var response = await _model.GenerateContent(prompt);
-                var jsonResponse = response.Text;
+                var jsonResponse = response.Text ?? string.Empty;
                 
                 // Parse the JSON response and convert to QuizQuestion objects
                 var questions = ParseQuizQuestionsFromJson(jsonResponse);
@@ -127,7 +127,7 @@ Provide feedback in this format:
 ";
 
                 var response = await _model.GenerateContent(prompt);
-                return response.Text;
+                return response.Text ?? string.Empty;
             }
             catch (Exception ex)
             {
@@ -155,7 +155,7 @@ Make the example educational and easy to understand for {difficulty} level stude
 ";
 
                 var response = await _model.GenerateContent(prompt);
-                return response.Text;
+                return response.Text ?? string.Empty;
             }
             catch (Exception ex)
             {
@@ -183,7 +183,7 @@ Format as a numbered list with brief explanations for each recommendation.
 ";
 
                 var response = await _model.GenerateContent(prompt);
-                return response.Text;
+                return response.Text ?? string.Empty;
             }
             catch (Exception ex)
             {

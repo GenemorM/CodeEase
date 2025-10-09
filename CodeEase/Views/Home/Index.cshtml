@@ -194,18 +194,29 @@
             // Check authentication status first
             checkAuthStatus();
             
-            // Only proceed if user is authenticated
-            if (authToken && currentUser) {
-                document.getElementById('recentLessons').style.display = 'block';
-                loadRecentLessons();
-            } else {
-                console.log('User not authenticated, skipping recent lessons');
-            }
+            // Always show recent lessons section and load lessons
+            document.getElementById('recentLessons').style.display = 'block';
+            loadRecentLessons();
         });
 
         async function loadRecentLessons() {
             try {
-                const response = await makeAuthenticatedRequest('/api/lessons/recent');
+                let response;
+                
+                // Try authenticated request first if we have a token
+                if (authToken && authToken !== 'null' && authToken !== '') {
+                    try {
+                        response = await makeAuthenticatedRequest('/api/lesson/recent');
+                    } catch (authError) {
+                        console.log('Authenticated request failed, trying without auth:', authError);
+                        // If authenticated request fails, try without authentication
+                        response = await fetch('/api/lesson/recent');
+                    }
+                } else {
+                    // No valid token, make regular request
+                    response = await fetch('/api/lesson/recent');
+                }
+                
                 if (response.ok) {
                     const lessons = await response.json();
                     displayRecentLessons(lessons);

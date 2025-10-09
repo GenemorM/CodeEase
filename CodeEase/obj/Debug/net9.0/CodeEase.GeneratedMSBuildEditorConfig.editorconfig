@@ -17,57 +17,57 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CodeEase
 build_property.RootNamespace = CodeEase
-build_property.ProjectDir = C:\Users\Genemor\GIT\CodeEase\CodeEase\
+build_property.ProjectDir = c:\Users\Genemor\GIT\CodeEase\CodeEase\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Genemor\GIT\CodeEase\CodeEase
+build_property.MSBuildProjectDirectory = c:\Users\Genemor\GIT\CodeEase\CodeEase
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/CodeRunner.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/CodeRunner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb2RlUnVubmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Index.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Lessons.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Lessons.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMZXNzb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Privacy.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Student.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Student.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdHVkZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Teacher.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Home/Teacher.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUZWFjaGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Shared/Error.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Shared/_ValidationScriptsPartial.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/_ViewImports.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/_ViewStart.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Shared/_Layout.cshtml]
+[c:/Users/Genemor/GIT/CodeEase/CodeEase/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-8oeewz44x5

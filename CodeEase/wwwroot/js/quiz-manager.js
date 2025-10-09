@@ -350,10 +350,207 @@ class QuizManager {
     }
 
     showAnalyticsModal(analytics) {
-        // This would show a modal with quiz analytics
-        // Implementation depends on the analytics data structure
-        console.log('Quiz Analytics:', analytics);
-        showToast('Analytics feature coming soon!', 'info');
+        // Create analytics modal HTML
+        const modalHtml = `
+            <div class="modal fade" id="quizAnalyticsModal" tabindex="-1" aria-labelledby="quizAnalyticsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="quizAnalyticsModalLabel">
+                                <i class="fas fa-chart-bar me-2"></i>Quiz Analytics: ${analytics.quizTitle}
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Overview Cards -->
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="card bg-primary text-white">
+                                        <div class="card-body text-center">
+                                            <h3>${analytics.totalAttempts}</h3>
+                                            <p class="mb-0">Total Attempts</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body text-center">
+                                            <h3>${analytics.completedAttempts}</h3>
+                                            <p class="mb-0">Completed</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-info text-white">
+                                        <div class="card-body text-center">
+                                            <h3>${analytics.uniqueStudents}</h3>
+                                            <p class="mb-0">Unique Students</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body text-center">
+                                            <h3>${analytics.averageScore.toFixed(1)}%</h3>
+                                            <p class="mb-0">Average Score</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Score Distribution -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">Score Statistics</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Highest Score:</span>
+                                                <strong>${analytics.highestScore.toFixed(1)}%</strong>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Average Score:</span>
+                                                <strong>${analytics.averageScore.toFixed(1)}%</strong>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Lowest Score:</span>
+                                                <strong>${analytics.lowestScore.toFixed(1)}%</strong>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <span>Avg. Time Spent:</span>
+                                                <strong>${analytics.averageTimeSpent.toFixed(1)} min</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">Completion Rate</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="progress mb-2" style="height: 25px;">
+                                                <div class="progress-bar bg-success" role="progressbar" 
+                                                     style="width: ${(analytics.completedAttempts / analytics.totalAttempts * 100).toFixed(1)}%">
+                                                    ${(analytics.completedAttempts / analytics.totalAttempts * 100).toFixed(1)}%
+                                                </div>
+                                            </div>
+                                            <small class="text-muted">
+                                                ${analytics.completedAttempts} of ${analytics.totalAttempts} attempts completed
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Student Performance Table -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Student Performance</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Student</th>
+                                                    <th>Attempts</th>
+                                                    <th>Best Score</th>
+                                                    <th>Latest Score</th>
+                                                    <th>Avg. Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${analytics.studentPerformances.map(student => `
+                                                    <tr>
+                                                        <td>${student.studentName}</td>
+                                                        <td>${student.attemptCount}</td>
+                                                        <td><span class="badge bg-success">${student.bestScore.toFixed(1)}%</span></td>
+                                                        <td><span class="badge bg-primary">${student.latestScore.toFixed(1)}%</span></td>
+                                                        <td>${student.timeSpent.toFixed(1)} min</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question Analytics -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Question Performance</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Question</th>
+                                                    <th>Type</th>
+                                                    <th>Total Answers</th>
+                                                    <th>Correct Answers</th>
+                                                    <th>Success Rate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${analytics.questionAnalytics.map((question, index) => `
+                                                    <tr>
+                                                        <td>
+                                                            <div class="text-truncate" style="max-width: 300px;" title="${question.questionText}">
+                                                                Q${index + 1}: ${question.questionText}
+                                                            </div>
+                                                        </td>
+                                                        <td><span class="badge bg-secondary">${question.questionType}</span></td>
+                                                        <td>${question.totalAnswers}</td>
+                                                        <td>${question.correctAnswers}</td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="progress me-2" style="width: 100px; height: 20px;">
+                                                                    <div class="progress-bar ${question.successRate >= 70 ? 'bg-success' : question.successRate >= 50 ? 'bg-warning' : 'bg-danger'}" 
+                                                                         style="width: ${question.successRate}%"></div>
+                                                                </div>
+                                                                <span class="small">${question.successRate.toFixed(1)}%</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="window.print()">
+                                <i class="fas fa-print me-1"></i>Print Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Remove existing modal if any
+        const existingModal = document.getElementById('quizAnalyticsModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // Add modal to DOM
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('quizAnalyticsModal'));
+        modal.show();
+
+        // Clean up modal when hidden
+        document.getElementById('quizAnalyticsModal').addEventListener('hidden.bs.modal', function () {
+            this.remove();
+        });
     }
 }
 

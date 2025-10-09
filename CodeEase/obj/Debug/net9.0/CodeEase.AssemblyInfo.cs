@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeEase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3737812d2e401ecef70bdd94202302085b804201")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ff88f4b4cbfa4c040166e1fc209970996e13370")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeEase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeEase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

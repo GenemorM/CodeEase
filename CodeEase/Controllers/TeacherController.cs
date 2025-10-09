@@ -454,6 +454,43 @@ namespace CodeEase.Controllers
                 return StatusCode(500, new { message = "Error generating quiz questions", error = ex.Message });
             }
         }
+
+        // Quiz Analytics Endpoints
+        [HttpGet("quiz/{quizId}/analytics")]
+        public async Task<IActionResult> GetQuizAnalytics(string quizId)
+        {
+            try
+            {
+                var teacherId = GetCurrentUserId();
+                if (string.IsNullOrEmpty(teacherId)) return Unauthorized();
+
+                var analytics = await _teacherService.GetQuizAnalyticsAsync(quizId, teacherId);
+                if (analytics == null) return NotFound(new { message = "Quiz not found or access denied" });
+
+                return Ok(analytics);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error loading quiz analytics", error = ex.Message });
+            }
+        }
+
+        [HttpGet("quiz-summaries")]
+        public async Task<IActionResult> GetQuizSummaries()
+        {
+            try
+            {
+                var teacherId = GetCurrentUserId();
+                if (string.IsNullOrEmpty(teacherId)) return Unauthorized();
+
+                var summaries = await _teacherService.GetTeacherQuizSummariesAsync(teacherId);
+                return Ok(summaries);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error loading quiz summaries", error = ex.Message });
+            }
+        }
     }
 
     // Request DTOs

@@ -94,6 +94,11 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="analytics-tab" data-bs-toggle="tab" data-bs-target="#analytics" type="button" role="tab">
+                        <i class="fas fa-chart-bar me-1"></i>Analytics
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
                     <button class="nav-link" id="progress-tab" data-bs-toggle="tab" data-bs-target="#progress" type="button" role="tab">
                         <i class="fas fa-chart-line me-1"></i>Progress
                     </button>
@@ -156,6 +161,94 @@
                     </div>
                     <div class="row" id="quizzesContainer">
                         <!-- Quizzes will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div class="tab-pane fade" id="analytics" role="tabpanel">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4><i class="fas fa-chart-bar me-2"></i>Quiz Analytics & Reports</h4>
+                            <p class="text-muted">View detailed analytics and performance reports for your quizzes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-filter me-2"></i>Filter Options</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="analyticsClassSelect" class="form-label">Select Class</label>
+                                        <select class="form-select" id="analyticsClassSelect">
+                                            <option value="">All Classes</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="analyticsDateRange" class="form-label">Date Range</label>
+                                        <select class="form-select" id="analyticsDateRange">
+                                            <option value="7">Last 7 days</option>
+                                            <option value="30" selected>Last 30 days</option>
+                                            <option value="90">Last 90 days</option>
+                                            <option value="365">Last year</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="loadQuizSummaries()">
+                                        <i class="fas fa-sync me-1"></i>Refresh Data
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Quick Stats</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <h4 class="text-primary mb-0" id="totalQuizzes">0</h4>
+                                            <small class="text-muted">Total Quizzes</small>
+                                        </div>
+                                        <div class="col-6">
+                                            <h4 class="text-success mb-0" id="totalAttempts">0</h4>
+                                            <small class="text-muted">Total Attempts</small>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <h4 class="text-info mb-0" id="averageScore">0%</h4>
+                                            <small class="text-muted">Average Score</small>
+                                        </div>
+                                        <div class="col-6">
+                                            <h4 class="text-warning mb-0" id="completionRate">0%</h4>
+                                            <small class="text-muted">Completion Rate</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0"><i class="fas fa-list me-2"></i>Quiz Performance Summary</h6>
+                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="exportAnalyticsReport()">
+                                <i class="fas fa-download me-1"></i>Export Report
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="quizSummariesContainer">
+                                <div class="text-center text-muted py-4">
+                                    <i class="fas fa-chart-bar fa-3x mb-3"></i>
+                                    <p>Click "Refresh Data" to load quiz analytics.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -583,3 +676,4 @@
 <script src="~/js/teacher.js"></script>
 <script src="~/js/quiz-creator.js"></script>
 <script src="~/js/quiz-manager.js"></script>
+<script src="~/js/analytics.js"></script>

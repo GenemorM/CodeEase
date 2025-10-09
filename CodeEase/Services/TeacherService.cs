@@ -125,6 +125,96 @@ namespace CodeEase.Services
                 .ToListAsync();
         }
 
+        // Quiz Analytics Methods
+        public async Task<QuizAnalyticsDto?> GetQuizAnalyticsAsync(string quizId, string teacherId)
+        {
+            var quizGuid = Guid.Parse(quizId);
+            var teacherGuid = Guid.Parse(teacherId);
+            
+            // Verify the quiz belongs to the teacher
+            var quiz = await _context.Quizzes
+                .Include(q => q.Lesson)
+                .Include(q => q.Questions)
+                .Include(q => q.Attempts)
+                    .ThenInclude(a => a.User)
+                .Include(q => q.Attempts)
+                    .ThenInclude(a => a.Answers)
+                        .ThenInclude(ans => ans.Question)
+                .FirstOrDefaultAsync(q => q.Id == quizGuid && q.Lesson.CreatedByUserId == teacherGuid);
+
+            if (quiz == null) return null;
+
+            var completedAttempts = quiz.Attempts.Where(a => a.IsCompleted).ToList();
+            var totalAttempts = quiz.Attempts.Count;
+            var uniqueStudents = quiz.Attempts.Select(a => a.UserId).Distinct().Count();
+
+            var analytics = new QuizAnalyticsDto
+            {
+                QuizId = quiz.Id,
+                QuizTitle = quiz.Title,
+                TotalQuestions = quiz.Questions.Count,
+                TotalAttempts = totalAttempts,
+                CompletedAttempts = completedAttempts.Count,
+                UniqueStudents = uniqueStudents,
+                AverageScore = completedAttempts.Any() ? completedAttempts.Average(a => a.Percentage) : 0,
+                HighestScore = completedAttempts.Any() ? completedAttempts.Max(a => a.Percentage) : 0,
+                LowestScore = completedAttempts.Any() ? completedAttempts.Min(a => a.Percentage) : 0,
+                AverageTimeSpent = completedAttempts.Any() ? 
+                    completedAttempts.Where(a => a.CompletedAt.HasValue)
+                        .Average(a => (a.CompletedAt!.Value - a.StartedAt).TotalMinutes) : 0,
+                StudentPerformances = completedAttempts.GroupBy(a => a.UserId)
+                    .Select(g => new StudentPerformanceDto
+                    {
+                        StudentId = g.Key,
+                        StudentName = (g.FirstOrDefault()?.User?.FirstName ?? "Unknown") + " " + (g.FirstOrDefault()?.User?.LastName ?? "User"),
+                        AttemptCount = g.Count(),
+                        BestScore = g.Max(a => a.Percentage),
+                        LatestScore = g.OrderByDescending(a => a.StartedAt).FirstOrDefault()?.Percentage ?? 0,
+                        TimeSpent = g.Where(a => a.CompletedAt.HasValue)
+                            .Average(a => (a.CompletedAt!.Value - a.StartedAt).TotalMinutes)
+                    }).ToList(),
+                QuestionAnalytics = quiz.Questions.Select(q => new QuestionAnalyticsDto
+                {
+                    QuestionId = q.Id,
+                    QuestionText = q.QuestionText,
+                    QuestionType = q.Type.ToString(),
+                    TotalAnswers = completedAttempts.SelectMany(a => a.Answers).Count(ans => ans.QuestionId == q.Id),
+                    CorrectAnswers = completedAttempts.SelectMany(a => a.Answers).Count(ans => ans.QuestionId == q.Id && ans.IsCorrect),
+                    SuccessRate = completedAttempts.SelectMany(a => a.Answers).Where(ans => ans.QuestionId == q.Id).Any() ?
+                        (double)completedAttempts.SelectMany(a => a.Answers).Count(ans => ans.QuestionId == q.Id && ans.IsCorrect) /
+                        completedAttempts.SelectMany(a => a.Answers).Count(ans => ans.QuestionId == q.Id) * 100 : 0
+                }).ToList()
+            };
+
+            return analytics;
+        }
+
+        public async Task<List<QuizSummaryDto>> GetTeacherQuizSummariesAsync(string teacherId)
+        {
+            var teacherGuid = Guid.Parse(teacherId);
+            
+            var quizzes = await _context.Quizzes
+                .Include(q => q.Lesson)
+                .Include(q => q.Attempts)
+                .Where(q => q.Lesson.CreatedByUserId == teacherGuid)
+                .Select(q => new QuizSummaryDto
+                {
+                    QuizId = q.Id,
+                    Title = q.Title,
+                    LessonTitle = q.Lesson.Title,
+                    IsPublished = q.IsPublished,
+                    CreatedAt = q.CreatedAt,
+                    TotalAttempts = q.Attempts.Count,
+                    CompletedAttempts = q.Attempts.Count(a => a.IsCompleted),
+                    AverageScore = q.Attempts.Where(a => a.IsCompleted).Any() ? 
+                        q.Attempts.Where(a => a.IsCompleted).Average(a => a.Percentage) : 0
+                })
+                .OrderByDescending(q => q.CreatedAt)
+                .ToListAsync();
+
+            return quizzes;
+        }
+
         public async Task<bool> DeleteClassAsync(string classId, string teacherId)
         {
             var classGuid = Guid.Parse(classId);
